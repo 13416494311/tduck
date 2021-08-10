@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/tduck?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&tinyInt1isBit=false
     username: root
-    password: root
+    password: 123456
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
@@ -17,7 +17,7 @@ spring:
     database: 1
     host: 127.0.0.1
     port: 6379
-    password:    # 密码（默认为空）
+    password: 123456   # 密码（默认为空）
     timeout: 6000ms  # 连接超时时长（毫秒）
     jedis:
       pool:
@@ -26,9 +26,13 @@ spring:
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
   mail:
-    host: smtp.exmail.qq.com
-    username: mpw:9jwi2HILb4x+eVy2fA0SYeits0G3qlm/YajJdX0OKQU=
-    password: mpw:kLAEhMW75jvbXovAGdf4gEoe2/j6OJMaK2GYhTD8b8A=
+    #host: smtp.exmail.qq.com
+    host: smtp.qq.com
+    username: 1489878447@qq.com
+    password: njlaxouyaoikhddi
+
+logback:
+  logpath: D:/ruoyi/tduck/logs
 
 logging:
   level:
@@ -36,30 +40,39 @@ logging:
   config: classpath:logback-spring.xml
 
 platform:
+  #oss:
+  #ossType: 1
+  #endpoint: 12
+  #accessKeyId: mpw:vT2DiLH0raFqd2+10sAGbvhyYQsWKuxj2YOnXAh+ZhAsMkhqcQBSa5tQosuposvs
+  #accessKeySecret: mpw:ZRJuLL9+aiBq+9PUN3wjrglLNvuK2yhKhrnSzw5P36P/E9QP4EIOIObeQvYjpaV/
+  #bucketName: tduck-cloud
+  #domain: https://qiniu.smileyi.top
   oss:
-    ossType: 1
-    endpoint: 12
-    accessKeyId: mpw:vT2DiLH0raFqd2+10sAGbvhyYQsWKuxj2YOnXAh+ZhAsMkhqcQBSa5tQosuposvs
-    accessKeySecret: mpw:ZRJuLL9+aiBq+9PUN3wjrglLNvuK2yhKhrnSzw5P36P/E9QP4EIOIObeQvYjpaV/
-    bucketName: tduck-cloud
-    domain: https://qiniu.smileyi.top
+    ossType: 3 # 3表示使用本地存储
+    endpoint:
+    accessKeyId:
+    accessKeySecret:
+    bucketName:
+    domain: http://192.168.220.7:8999/tduck-api/profile  #对外访问的地址 使用后端项目部署的ip+端口 后面可以固定
+    upload-folder: D:\ruoyi\uploadPath\tduck #文件存放的位置
+    access-path-pattern: /profile/**  # 文件访问路径前缀 这里更改domain也需要更改
   sms:
     type: 1  # 短信平台类型
     secretId: mpw:EvC1LR0eGdzeQzkuO7fhEazxGtmdue8FJDzSA1l+gICuOUEDXI8zcjK+VXB2aWKS
     secretKey: mpw:W3kvWxvHdgUJPAwqR6mwpfMoQMerAYcxZGHwJc259lK3m+jzceGuu0Tgnx++02Bk
     appId: 1400461467
-    sign: smileyi知识分享
+    sign: 投票/问卷
     validateCodeTemplateId: 808150
     retrievePwdValidateCodeTemplateId: 809014
   front:
-    baseUrl: http://localhost:8888/
-    resetPwdUrl: http://localhost:8888/forget/password?code={}&email={}
-    updateEmailUrl: http://localhost:8888/account/validate?type=updateEmail&code={}&email={}
+    baseUrl: http://192.168.220.7:8888/
+    resetPwdUrl: http://192.168.220.7:8888/forget/password?code={}&email={}
+    updateEmailUrl: http://192.168.220.7:8888/account/validate?type=updateEmail&code={}&email={}
 wx:
   mp:
     redis-config-key-prefix: wx
     configs:
-      - appId: mpw:4a4WuGFJwUqxCafqfPwlWGBq+WTgA8Dzpx+5uRNzuUg=
-        secret: mpw:P7se5EtBUp0txkSgGFlNG7nz9jluCq++4Tz5DnWpeaCLf1mQV6XXusR0u+ssn6Rg
-        token: mpw:4RxTRQGra0TACzttk+84TRsnVhTyG6a/peX0v+KZgyg=
+      - appId: wx0f7d934c69e78d06
+        secret: 65a8d102b1ed868015981a7a0a6c050f
+        token: 4RxTRQGra0TACzttk+84TRsnVhTyG6a/peX0v+KZgyg=
         aesKey:
