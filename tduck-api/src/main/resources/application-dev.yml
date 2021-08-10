@@ -53,7 +53,7 @@ platform:
     accessKeyId:
     accessKeySecret:
     bucketName:
-    domain: http://192.168.220.7:8999/tduck-api/profile  #对外访问的地址 使用后端项目部署的ip+端口 后面可以固定
+    domain: ${platform.front.baseUrl}tduck-api/profile  #对外访问的地址 使用后端项目部署的ip+端口 后面可以固定
     upload-folder: D:\ruoyi\uploadPath\tduck #文件存放的位置
     access-path-pattern: /profile/**  # 文件访问路径前缀 这里更改domain也需要更改
   sms:
@@ -65,9 +65,9 @@ platform:
     validateCodeTemplateId: 808150
     retrievePwdValidateCodeTemplateId: 809014
   front:
-    baseUrl: http://192.168.220.7:8888/
-    resetPwdUrl: http://192.168.220.7:8888/forget/password?code={}&email={}
-    updateEmailUrl: http://192.168.220.7:8888/account/validate?type=updateEmail&code={}&email={}
+    baseUrl: http://192.168.0.9:8888/
+    resetPwdUrl: ${platform.front.baseUrl}forget/password?code={}&email={}
+    updateEmailUrl: ${platform.front.baseUrl}account/validate?type=updateEmail&code={}&email={}
 wx:
   mp:
     redis-config-key-prefix: wx

@@ -1,7 +1,9 @@
 package com.tduck.cloud.api.web.controller;
 
 import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.tduck.cloud.account.request.RegisterAccountRequest;
 import com.tduck.cloud.account.request.RetrievePasswordRequest;
 import com.tduck.cloud.account.service.UserValidateService;
@@ -38,6 +40,17 @@ public class ProjectController {
                 .jsonConcat(StrUtil.isNotBlank(request.getColor()), ProjectThemeEntity.Fields.color, StrUtil.EMPTY, request.getColor())
                 .jsonConcat(StrUtil.isNotBlank(request.getStyle()), ProjectThemeEntity.Fields.style, StrUtil.EMPTY, request.getStyle()));
         return Result.success(list);
+    }
+
+    @PostMapping("theme/save")
+    public Result saveProjectTheme(@RequestBody ProjectThemeEntity themeEntity) {
+        ValidatorUtils.validateEntity(themeEntity);
+        ProjectThemeEntity entity = projectThemeService
+                .getOne(Wrappers.<ProjectThemeEntity>lambdaQuery().eq(ProjectThemeEntity::getId, themeEntity.getId()));
+        if (ObjectUtil.isNotNull(entity)) {
+            themeEntity.setId(entity.getId());
+        }
+        return Result.success(projectThemeService.saveOrUpdate(themeEntity));
     }
 
     /**
