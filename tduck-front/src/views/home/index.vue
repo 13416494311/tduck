@@ -33,7 +33,8 @@
                             </div>
                         </div>
                         <div slot="reference">
-                            <img v-if="getUserInfo" :src="getUserInfo.avatar" class="user-avatar">
+                            <img v-if="getUserInfo.avatar" :src="getUserInfo.avatar" class="user-avatar">
+                            <img v-else :src="defaultAvatar" class="user-avatar">
                         </div>
                     </el-popover>
                 </div>
@@ -81,14 +82,16 @@
 import {formConf} from '@/components/generator/config'
 import store from '@/store'
 import router from '@/router'
+import defaultAvatar from '@/assets/images/logo.png'
 
 export default {
     name: 'NewIndex',
     components: {},
     data() {
         return {
-            title: '投票/问卷创建平台',
+            title: '投票/问卷调查平台',
             defaultActiveMenu: '',
+            defaultAvatar,
             menuList: [
                 {
                     route: '/home',
@@ -194,7 +197,7 @@ $menuActiveText: #409eff;
    .sidebar-title {
      display: inline-block;
      margin: 0;
-     color: #1890ff;
+     color: $menuActiveText;
      font-weight: 600;
      line-height: 50px;
      font-size: 16px;
