@@ -42,6 +42,13 @@ public interface UserService extends IService<UserEntity> {
      */
     Result accountLogin(AccountLoginRequest request);
 
+    /**
+     * 平台账号登录
+     *
+     * @param request
+     * @return
+     */
+    Result platformLogin(AccountLoginRequest request);
 
     /**
      * 获取登录结果
@@ -78,6 +85,7 @@ public interface UserService extends IService<UserEntity> {
      */
     UserEntity getUserByPhoneNumber(String phoneNumber);
 
+    UserEntity getUserByPlatformAndName(String platform,String name);
     /***
      * 更新密码
      * @param userId

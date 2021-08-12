@@ -104,6 +104,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 request.getRequestIp()));
     }
 
+    @Override
+    public Result platformLogin(AccountLoginRequest request) {
+        UserEntity userEntity  = getUserByPlatformAndName(request.getPlatform() ,request.getAccount());
+        if (ObjectUtil.isNull(userEntity) || !DigestUtil.sha256Hex(request.getPassword()).equals(userEntity.getPassword())) {
+            return Result.failed("账号或密码错误");
+        }
+        return Result.success(getLoginResult(userEntity,
+                AccountChannelEnum.PLATFORM,
+                request.getRequestIp()));
+    }
 
     /**
      * 获取登录结果
@@ -146,6 +156,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public UserEntity getUserByPhoneNumber(final String phoneNumber) {
         return this.getOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getPhoneNumber, phoneNumber));
+    }
+
+    @Override
+    public UserEntity getUserByPlatformAndName( String platform,String name) {
+        return this.getOne(Wrappers.<UserEntity>lambdaQuery().eq(UserEntity::getPlatform, platform).eq(UserEntity::getName, name));
     }
 
     @Override

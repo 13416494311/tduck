@@ -49,6 +49,11 @@ public class UserEntity extends BaseEntity<UserEntity> {
      * 注册渠道
      */
     private AccountChannelEnum regChannel;
+
+    /**
+     * 注册平台代码
+     */
+    private String platform;
     /**
      * 最后登录渠道
      */

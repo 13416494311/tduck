@@ -12,9 +12,11 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class AccountLoginRequest {
 
+    @NotBlank(message = "请选择平台")
+    private String platform;
     @NotBlank(message = "请填写账号")
     private String account;
-    @NotBlank(message = "请填写密码")
+
     private String password;
 
     /**

@@ -19,7 +19,8 @@ public enum AccountChannelEnum {
     WX_MP(1, "微信扫码"),
     EMAIL(2, "邮箱"),
     PHONE(3, "手机号"),
-    QQ(4, "QQ");
+    QQ(4, "QQ"),
+    PLATFORM(5, "其他平台");
 
 
     @EnumValue

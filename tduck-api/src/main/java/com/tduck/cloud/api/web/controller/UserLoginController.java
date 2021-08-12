@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.google.common.collect.ImmutableMap;
 import com.tduck.cloud.account.constant.AccountRedisKeyConstants;
 import com.tduck.cloud.account.entity.UserEntity;
@@ -17,7 +18,9 @@ import com.tduck.cloud.account.service.UserService;
 import com.tduck.cloud.account.service.UserValidateService;
 import com.tduck.cloud.account.util.QqAuthorizationUtils;
 import com.tduck.cloud.account.vo.LoginUserVO;
+import com.tduck.cloud.api.config.RsaConfig;
 import com.tduck.cloud.api.util.HttpUtils;
+import com.tduck.cloud.api.util.RSAEncrypt;
 import com.tduck.cloud.common.util.JsonUtils;
 import com.tduck.cloud.common.util.RedisUtils;
 import com.tduck.cloud.common.util.Result;
@@ -28,9 +31,11 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLDecoder;
 import java.util.Optional;
 
 /**
@@ -49,6 +54,34 @@ public class UserLoginController {
     private final RedisUtils redisUtils;
     private final QqAuthorizationUtils qqAuthorizationUtils;
 
+    @Value("${config.initPassword}")
+    private String initPassword;
+    /**
+     * 账号登录
+     *
+     * @return
+     */
+    @PostMapping("/login/platform")
+    public Result platformLogin(@RequestBody AccountLoginRequest request, HttpServletRequest httpRequest) throws Exception {
+        String ipAddr = HttpUtils.getIpAddr(httpRequest);
+        request.setRequestIp(ipAddr);
+        ValidatorUtils.validateEntity(request);
+        request.setAccount(RSAEncrypt.decrypt(URLDecoder.decode(request.getAccount(), "UTF-8") , RsaConfig.getPrivateKey()));
+        UserEntity userEntity = userService.getUserByPlatformAndName(request.getPlatform(),request.getAccount());
+        if(ObjectUtil.isNull(userEntity)){
+            userEntity = new  UserEntity();
+            userEntity.setName(request.getAccount());
+            userEntity.setPassword(DigestUtil.sha256Hex(initPassword));
+            userEntity.setRegChannel(AccountChannelEnum.PLATFORM);
+            userEntity.setPlatform(request.getPlatform());
+            userService.save(userEntity);
+        }
+
+        return Result.success(userService.getLoginResult(userEntity,
+                AccountChannelEnum.PLATFORM,
+                request.getRequestIp()));
+
+    }
 
     /**
      * 账号登录
@@ -63,8 +96,10 @@ public class UserLoginController {
         if (ReUtil.isMatch(Validator.MOBILE, request.getAccount())
                 || ReUtil.isMatch(Validator.EMAIL, request.getAccount())) {
             return userService.accountLogin(request);
+        }else{
+            return userService.platformLogin(request);
         }
-        return Result.failed("账号错误，请输入手机号或邮箱");
+
     }
 
 
