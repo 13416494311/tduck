@@ -10,9 +10,9 @@
                                 <td width="80" style="text-align: right;">用户名：</td>
                                 <td>
                                     {{ userInfo.name }}
-                                    <el-button type="text" @click="editNameDialogVisible=true">
+                                    <!--<el-button type="text" @click="editNameDialogVisible=true">
                                         修改
-                                    </el-button>
+                                    </el-button>-->
                                 </td>
                             </tr>
                             <tr>

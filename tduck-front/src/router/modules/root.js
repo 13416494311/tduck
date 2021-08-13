@@ -22,7 +22,7 @@ export default [
     {
         path: '/',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home')
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login/index')
     },
     {
         path: '/payService',
@@ -33,6 +33,11 @@ export default [
         path: '/login',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login/index')
+    },
+    {
+        path: '/login/platform',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login/platformLogin')
     },
     {
         path: '/home',

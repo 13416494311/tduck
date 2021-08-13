@@ -61,7 +61,7 @@ platform:
     secretId: mpw:EvC1LR0eGdzeQzkuO7fhEazxGtmdue8FJDzSA1l+gICuOUEDXI8zcjK+VXB2aWKS
     secretKey: mpw:W3kvWxvHdgUJPAwqR6mwpfMoQMerAYcxZGHwJc259lK3m+jzceGuu0Tgnx++02Bk
     appId: 1400461467
-    sign: 投票/问卷
+    sign: 投票/问卷平台
     validateCodeTemplateId: 808150
     retrievePwdValidateCodeTemplateId: 809014
   front:
@@ -76,3 +76,10 @@ wx:
         secret: 65a8d102b1ed868015981a7a0a6c050f
         token: 4RxTRQGra0TACzttk+84TRsnVhTyG6a/peX0v+KZgyg=
         aesKey:
+
+config:
+  initPassword: 123456
+
+rsa:
+  publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCMwSwaReHYXR/63yd18tTHhrEAb8qS5Pc3tsTZBBP10MWZ4eeH4il8xhC4+GpYXuXpLuxKlJlYN69JJoUybaaQoVyWX+sD2Kic3Eoz8ovLuHAg33E0jU53HZ+4p8uknHlhnlJs0drdnVoG/CjpD90tEDnu2aPoFP4LtPgbawuOrwIDAQAB
+  privateKey: MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAIzBLBpF4dhdH/rfJ3Xy1MeGsQBvypLk9ze2xNkEE/XQxZnh54fiKXzGELj4alhe5eku7EqUmVg3r0kmhTJtppChXJZf6wPYqJzcSjPyi8u4cCDfcTSNTncdn7iny6SceWGeUmzR2t2dWgb8KOkP3S0QOe7Zo+gU/gu0+BtrC46vAgMBAAECgYEAgrC+NWrbh1z4W6Sl7CNbpCOQ55nlGr2UOdvvLJ1Xty9wujACHa5F3T++uTCW9ZSvnvLdnWYad8nEbIRium8LbudT8MWSp431Awv+dg8LMenj1xuhybIOPvxMuaR76WPl5jQsOyoN5BYWXHlSxiky4DLYIAl+CaJi34vd2WNbMjECQQDuj2jwtOmQhGBfDzD625QlABZUO0rKV9eh2xwvQEqh3s2LGlGJ3/vBvaLVyxWW2hvLVwljR0ubHpTojxODdPvHAkEAlwtbQlM5FCLvsdMCm5muLeLP8l3aXVf1yahXJruUvjlJdrNAm9EbLrffh6GZSBjZgJc1cGEMkMYO657Nu87F2QJBAK6olJ5W9gH2yVAPoT6o8Oe+DpsQ5gsLETbRYus9WOb2ZuqHFFerg3kvTD7W9zGA8oSHbrofAr3JQCCcUB8Y0RUCQFSPZQ3irafaTzrMmT8ncF38BtL3PBLZ9Z5qAjCK/6DnTXuIqvkQvhkPk7LJA5lbYBkfjilWC8TZPO0oQKGOBzECQQCIG/YviBWhCJJgOPaHdge6SV/d0vm4E1jFCnCH7FDd0TR0kF/pDSoFoRdoXZdCLCEozlQ2C9fcgN4YqZ9OwDq3

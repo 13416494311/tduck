@@ -2,6 +2,7 @@
     <div>
         <el-cascader
             v-model="value"
+            style="width: 100%"
             :options="options"
             :props="props"
             clearable
@@ -16,6 +17,7 @@ export default {
     name: 'ProvinceCity',
     data() {
         return {
+            value: '',
             options: city,
             props: {
                 label: 'n',

@@ -74,9 +74,7 @@
                             </el-tooltip>
                         </el-col>
                     </el-row>
-                    <img class="project-grid-view-preimg"
-                         src="data:image/png;base64,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"
-                    >
+                    <img class="project-grid-view-preimg" :src="preimg" @click="toProjectHandle(p.key,'editor')">
                     <p class="project-grid-view-time">创建时间：{{ p.createTime | formatDate }}</p>
                     <div class="gird-operating-btns">
                         <el-button type="text" @click="toProjectHandle(p.key,'editor')">
@@ -230,6 +228,7 @@
 </template>
 <script>
 import dayjs from 'dayjs'
+import preimg from '@/assets/images/preimg.png'
 
 let projectStatusList = [
     {code: 1, name: '未发布', color: '#006EFF'},
@@ -246,6 +245,7 @@ export default {
     },
     data() {
         return {
+            preimg,
             dataShowType: 'gird',
             total: 0,
             queryParams: {
@@ -408,6 +408,7 @@ export default {
 .project-grid-view-preimg {
     width: 143px;
     height: 121px;
+    padding: 20px;
 }
 .project-grid-view-time {
     color: rgba(144, 147, 153, 100);

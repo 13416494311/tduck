@@ -4,8 +4,8 @@
             <img src="@/assets/images/logo_banner.png">
         </div>
         <div class="logo-content">
-            <span class="hello">Hello ，</span>
-            <span class="tips">欢迎使用Tduck！</span>
+            <!--<span class="hello">Hello ，</span>
+      <span class="tips">欢迎使用！</span>-->
             <el-tabs v-if="formType=='login'" v-model="loginType" class="login-form-tab">
                 <el-tab-pane v-if="enableWx" label="微信扫码登录" name="wx">
                     <div class="wx-login">
@@ -39,8 +39,18 @@
                              status-icon
                              @keyup.enter.native="loginHandle"
                     >
+                        <el-form-item prop="platform">
+                            <el-select v-model="accountForm.platform" style="width: 100%" autocomplete="off" placeholder="请选择">
+                                <el-option
+                                    v-for="item in platformList"
+                                    :key="item.key"
+                                    :label="item.label"
+                                    :value="item.key"
+                                />
+                            </el-select>
+                        </el-form-item>
                         <el-form-item prop="account">
-                            <el-input v-model="accountForm.account" autocomplete="off" placeholder="请输入手机号/邮箱"
+                            <el-input v-model="accountForm.account" autocomplete="off" placeholder="请输入登录账号"
                                       prefix-icon="el-icon-user-solid"
                             />
                         </el-form-item>
@@ -51,26 +61,26 @@
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="loginHandle">登录</el-button>
-                            <el-link class="ml-20 link-btn" @click="toForgetPwdHandle">忘记密码</el-link>
-                            <el-link class="ml-20 link-btn" @click="formType='reg'">立即注册</el-link>
+                            <!--<el-link class="ml-20 link-btn" @click="toForgetPwdHandle">忘记密码</el-link>
+              <el-link class="ml-20 link-btn" @click="formType='reg'">立即注册</el-link>-->
                         </el-form-item>
-                        <div class="other-login">
-                            <span @click="redirectUrl(qqLoginAuthorizeUrl)">
-                                <svg-icon class="other-login-icon" name="loginQQ" />
-                            </span>
-                        </div>
+                        <!--<div class="other-login">
+                <span @click="redirectUrl(qqLoginAuthorizeUrl)">
+                    <svg-icon class="other-login-icon" name="loginQQ" />
+                </span>
+            </div>-->
                     </el-form>
                 </el-tab-pane>
             </el-tabs>
             <register v-else @success="registerSuccessHandle" />
-            <p class="desc">
-                关于TDuckApp登录
-            </p>
-            <p class="desc">
-                若微信扫码失败，请打开 微信授权页面 登录 若QQ登录填鸭云异常，
-                可查阅 帮助文档 若因微信、QQ、公众号冻结或账号密码找回失败等
-                无法登录，可 自助申请 登录账号
-            </p>
+            <!--<p class="desc">
+          关于TDuckApp登录
+      </p>
+      <p class="desc">
+          若微信扫码失败，请打开 微信授权页面 登录 若QQ登录填鸭云异常，
+          可查阅 帮助文档 若因微信、QQ、公众号冻结或账号密码找回失败等
+          无法登录，可 自助申请 登录账号
+      </p>-->
         </div>
     </div>
 </template>
@@ -87,7 +97,7 @@ export default {
         Register
     },
     data() {
-        const validateAccount = (rule, value, callback) => {
+        /* const validateAccount = (rule, value, callback) => {
             const reg1 = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
             const reg2 = /^(?:0|86|\+86)?1[3456789]\d{9}$/
             if (reg1.test(value) || reg2.test(value)) {
@@ -95,14 +105,16 @@ export default {
             } else {
                 callback(new Error('请输入正确的账号'))
             }
-        }
+        }*/
         return {
             formType: 'login',
             loginType: 'wx',
             agreeProtocol: '',
             accountLoginRules: {
                 account: [
-                    {required: true, trigger: 'blur', message: '请输入账号'}, {trigger: 'blur', validator: validateAccount}],
+                    {required: true, trigger: 'blur', message: '请输入账号'}
+                    /* {trigger: 'blur', validator: validateAccount}*/
+                ],
                 password: [
                     {required: true, trigger: 'blur', message: '请输入新密码'},
                     {
@@ -112,6 +124,7 @@ export default {
                 ]
             },
             accountForm: {
+                platform: '',
                 email: '',
                 phoneNumber: '',
                 password: ''
@@ -121,7 +134,11 @@ export default {
             wxLoginId: '',
             refreshWxQrcodeTimer: null,
             wxQrcodeResultTimer: null,
-            qqLoginAuthorizeUrl: ''
+            qqLoginAuthorizeUrl: '',
+            platformList: [
+                {'label': '中铁三局广东公司智慧党建系统', 'key': 'dj'},
+                {'label': '中铁三局广东公司智慧工会系统', 'key': 'zhgh'}
+            ]
         }
     },
     computed: {
@@ -224,97 +241,97 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-container {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.logo-banner {
-  width: 50%;
-
-  img {
+  .login-container {
+    height: 100%;
     width: 100%;
-  }
-}
-
-.logo-content {
-  width: 400px;
-  margin-left: 100px;
-
-  .hello {
-    font-size: 40px;
-    font-weight: bold;
-    color: #10141C;
-    line-height: 134px;
+    display: flex;
+    align-items: center;
   }
 
-  .wx-login-qrcode {
-    width: 192px;
-    height: 192px;
-    border-radius: 50px;
+  .logo-banner {
+    width: 50%;
+
+    img {
+      width: 100%;
+    }
   }
 
-  .tips {
-    font-size: 21px;
-    font-weight: bold;
-    color: #10141C;
-    line-height: 134px;
+  .logo-content {
+    width: 400px;
+    margin-left: 100px;
+
+    .hello {
+      font-size: 40px;
+      font-weight: bold;
+      color: #10141C;
+      line-height: 134px;
+    }
+
+    .wx-login-qrcode {
+      width: 192px;
+      height: 192px;
+      border-radius: 50px;
+    }
+
+    .tips {
+      font-size: 21px;
+      font-weight: bold;
+      color: #10141C;
+      line-height: 134px;
+    }
+
+    .desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: #C0C4CC;
+      line-height: 18px;
+    }
+
+    .login-form-tab {
+      width: 300px;
+    }
   }
 
-  .desc {
-    font-size: 14px;
-    font-weight: 400;
-    color: #C0C4CC;
-    line-height: 18px;
+  .other-login-icon {
+    font-size: 25px;
+    cursor: pointer;
   }
 
-  .login-form-tab {
-    width: 300px;
+  .logo-content ::v-deep.el-tabs__nav-wrap::after {
+    position: static !important;
   }
-}
 
-.other-login-icon {
-  font-size: 25px;
-  cursor: pointer;
-}
+  .logo-content ::v-deep.el-tabs__active-bar {
+    width: 59px !important;
+    height: 7px !important;
+    border-radius: 4px !important;
+    left: 5% !important;
+    background-color: #D8D8D8 !important;
+  }
 
-.logo-content ::v-deep.el-tabs__nav-wrap::after {
-  position: static !important;
-}
+  .logo-tabs ::v-deep.el-tabs__item.is-active {
+    color: #10141C !important;
+  }
 
-.logo-content ::v-deep.el-tabs__active-bar {
-  width: 59px !important;
-  height: 7px !important;
-  border-radius: 4px !important;
-  left: 5% !important;
-  background-color: #D8D8D8 !important;
-}
+  ::v-deep .el-input {
+    height: 39px !important;
+    line-height: 39px !important;
+  }
 
-.logo-tabs ::v-deep.el-tabs__item.is-active {
-  color: #10141C !important;
-}
+  .link-btn {
+    font-size: 12px !important;
+  }
 
-::v-deep .el-input {
-  height: 39px !important;
-  line-height: 39px !important;
-}
+  ::v-deep .el-input__inner {
+    height: 39px !important;
+    line-height: 39px !important;
+    background: #F2F2F2 !important;
+    border: none;
+  }
 
-.link-btn {
-  font-size: 12px !important;
-}
-
-::v-deep .el-input__inner {
-  height: 39px !important;
-  line-height: 39px !important;
-  background: #F2F2F2 !important;
-  border: none;
-}
-
-::v-deep .el-button {
-  background: #408EFC;
-  border-radius: 10px;
-  width: 145px;
-}
+  ::v-deep .el-button {
+    background: #408EFC;
+    border-radius: 10px;
+    width: 145px;
+  }
 </style>

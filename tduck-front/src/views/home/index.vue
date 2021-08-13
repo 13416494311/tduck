@@ -1,7 +1,7 @@
 <template>
     <div class="home-container">
         <el-container>
-            <el-header class="header-container" height="38">
+            <el-header v-show="false" class="header-container" height="38">
                 <div>
                     <!--<img class="header-logo-img" src="@/assets/images/indexLogo.svg"
                          @click="$router.push({path:'/'})"
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div slot="reference">
-                            <img v-if="getUserInfo.avatar" :src="getUserInfo.avatar" class="user-avatar">
+                            <img v-if="getUserInfo && getUserInfo.avatar" :src="getUserInfo.avatar" class="user-avatar">
                             <img v-else :src="defaultAvatar" class="user-avatar">
                         </div>
                     </el-popover>
@@ -89,7 +89,7 @@ export default {
     components: {},
     data() {
         return {
-            title: '投票/问卷调查平台',
+            title: '投票/问卷平台',
             defaultActiveMenu: '',
             defaultAvatar,
             menuList: [

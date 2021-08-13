@@ -1,6 +1,6 @@
 <template>
     <div class="create-container">
-        <el-row>
+        <el-row style="width: 100%">
             <div class="create-header-container">
                 <div class="filter-container">
                     <el-form ref="form" :inline="true">
@@ -149,6 +149,7 @@ export default {
     flex-direction: column;
     align-items: center;
     align-content: center;
+    overflow-x: hidden;
     .el-pagination {
         margin-top: 20px;
     }
