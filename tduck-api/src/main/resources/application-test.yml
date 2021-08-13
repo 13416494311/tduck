@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.97.249.180:11416/tduck?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&tinyInt1isBit=false
-    username: tduckadmin
-    password: tduckpassword
+    url: jdbc:mysql://127.0.0.1:3306/tduck?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&tinyInt1isBit=false
+    username: sjgzzhgh
+    password: sjgzzhgh2021
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
@@ -13,10 +13,67 @@ spring:
       pool-name: DatebookHikariCP
       max-lifetime: 1800000
       connection-test-query: SELECT 1 FROM DUAL
+  redis:
+    database: 2
+    host: 127.0.0.1
+    port: 6379
+    password: 63798888
+    timeout: 6000ms  # 连接超时时长（毫秒）
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 10      # 连接池中的最大空闲连接
+        min-idle: 5       # 连接池中的最小空闲连接
+  mail:
+    #host: smtp.exmail.qq.com  #企业邮箱
+    host: smtp.qq.com
+    username: 1489878447@qq.com
+    password: njlaxouyaoikhddi
+
+logback:
+  logpath: /tduck/logs
+
 logging:
   level:
     com.tduck.cloud: debug
   config: classpath:logback-spring.xml
+
+#  请求日志是否打印
+platform:
+  qq:
+    oauth:
+      appId:
+      secret:
+  oss:
+    ossType: 3 #本地存储
+    endpoint:
+    accessKeyId:
+    accessKeySecret:
+    bucketName:
+    domain: ${platform.front.baseUrl}tduck-api/profile  #提供访问的域名
+    upload-folder: /tduck/upload/profile #文件存放的位置
+    access-path-pattern: /profile/**  # 文件访问路径前缀 这里更改domain也需要更改
+  sms:
+    type: 1  # 短信平台类型
+    secretId: Ga2AIryi8174KXz  #短信秘钥
+    secretKey: uHSpKfjtadadaezjwtN6B0dvbelv #短信秘钥
+    appId:
+    sign:  投票/问卷平台                  #短信签名
+    validateCodeTemplateId: SMS_219865038 #验证码模板
+    retrievePwdValidateCodeTemplateId: SMS_219865039  # 找回密码模板
+  front:
+    baseUrl: http://www.ztsjgdgs.cn:5001/
+    resetPwdUrl: ${platform.front.baseUrl}forget/password?code={}&email={}
+    updateEmailUrl: ${platform.front.baseUrl}account/validate?type=updateEmail&code={}&email={}
+
+wx:
+  mp:
+    configs:
+    - appId:   #公众号appId
+      secret: #公众号秘钥
+      token: dHClTzEAcayUX0Jyy9TwBp89QrdWvvZZ
+      aesKey: 3aNsbtc8wdx92M14YszvQSU4zksx9M1Gl8k655vYOLB
 
 config:
   initPassword: 123456
